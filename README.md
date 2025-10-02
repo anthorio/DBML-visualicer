@@ -39,6 +39,12 @@ npm run dev
 2. Reinicia el servidor de desarrollo con `npm run dev`
 3. Las tablas se cargarán automáticamente al iniciar la aplicación
 
+### Archivo de Ejemplo
+El proyecto incluye `ejemplo-tienda.dbml` que contiene tres tablas relacionadas:
+- **ejemplo_productos**: Catálogo de productos con precios y stock
+- **ejemplo_clientes**: Información de clientes registrados  
+- **ejemplo_pedidos**: Pedidos realizados por los clientes
+
 ### Interactuar con las Tablas
 - **Pasa el ratón** sobre cualquier columna para ver su descripción completa
 - **Primary keys** se muestran con emoji de llave 🔑 y fondo destacado
@@ -97,9 +103,7 @@ src/
 ├── main.jsx               # Punto de entrada
 └── index.css              # Estilos globales
 tablas/                     # Carpeta con archivos .dbml (raíz del proyecto)
-├── DTDOBA.dbml            # Ejemplo de tabla bancaria
-├── DTCLMA.dbml            # Ejemplo de tabla de prestaciones
-└── DTCLIE.dbml            # Ejemplo de tabla de clientes
+└── ejemplo-tienda.dbml    # Archivo de ejemplo con tablas de una tienda online
 ```
 
 ## Contribuir

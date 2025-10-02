@@ -1,0 +1,39 @@
+Table ejemplo_productos {
+  prod_id integer [note: "ID único del producto"]
+  prod_nombre varchar(100) [note: "Nombre del producto"]
+  prod_precio decimal(10,2) [note: "Precio del producto"]
+  prod_categoria varchar(50) [note: "Categoría del producto"]
+  prod_stock integer [note: "Cantidad en stock"]
+  prod_activo boolean [note: "Producto activo (S/N)"]
+  prod_fecha_creacion date [note: "Fecha de creación del producto"]
+  prod_descripcion text [note: "Descripción detallada del producto"]
+}
+
+Table ejemplo_clientes {
+  cli_id integer [note: "ID único del cliente"]
+  cli_nombre varchar(50) [note: "Nombre del cliente"]
+  cli_apellido varchar(50) [note: "Apellido del cliente"]
+  cli_email varchar(100) [note: "Email del cliente"]
+  cli_telefono varchar(15) [note: "Teléfono de contacto"]
+  cli_direccion varchar(200) [note: "Dirección del cliente"]
+  cli_fecha_registro date [note: "Fecha de registro del cliente"]
+  cli_activo boolean [note: "Cliente activo (S/N)"]
+}
+
+Table ejemplo_pedidos {
+  ped_id integer [note: "ID único del pedido"]
+  ped_cliente_id integer [note: "ID del cliente que realiza el pedido"]
+  ped_fecha date [note: "Fecha del pedido"]
+  ped_total decimal(10,2) [note: "Total del pedido"]
+  ped_estado varchar(20) [note: "Estado del pedido (pendiente, enviado, entregado)"]
+  ped_direccion_envio varchar(200) [note: "Dirección de envío"]
+}
+
+Indexes {
+  productos_idx1 (prod_id) [unique]
+  productos_idx2 (prod_categoria)
+  clientes_idx1 (cli_id) [unique]
+  clientes_idx2 (cli_email) [unique]
+  pedidos_idx1 (ped_id) [unique]
+  pedidos_idx2 (ped_cliente_id)
+}
