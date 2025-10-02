@@ -1,0 +1,235 @@
+.table-visualizer {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-visualizer h2 {
+  margin-top: 0;
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.tables-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.table-card {
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.table-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-header {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e1e8ed;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-title {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.table-name {
+  margin: 0;
+  color: #1d2129;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.file-name {
+  font-size: 0.8rem;
+  color: #65676b;
+  font-weight: normal;
+}
+
+.column-count {
+  background: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.table-body {
+  padding: 0;
+}
+
+.columns-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.column-row {
+  padding: 12px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s, transform 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.column-row:hover {
+  background-color: #f8f9fa;
+  transform: translateX(3px);
+}
+
+.column-row:last-child {
+  border-bottom: none;
+}
+
+.column-row.primary-key {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+}
+
+.column-row.primary-key:hover {
+  background-color: #ffeaa7;
+}
+
+.column-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.column-name {
+  font-weight: 600;
+  color: #1d2129;
+  font-family: 'Courier New', monospace;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.key-icon {
+  font-size: 1.1em;
+  filter: drop-shadow(0 0 2px rgba(255, 193, 7, 0.5));
+}
+
+.column-type {
+  color: white;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.column-note {
+  color: #65676b;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 5px;
+  padding-left: 15px;
+  border-left: 3px solid #e1e8ed;
+}
+
+.no-tables {
+  text-align: center;
+  padding: 40px;
+  color: #65676b;
+}
+
+.no-tables p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.indexes-section {
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e1e8ed;
+  margin-top: 10px;
+}
+
+.indexes-section h4 {
+  margin: 0 0 10px 0;
+  color: #495057;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.index-item {
+  font-size: 0.8rem;
+  color: #6c757d;
+  margin-bottom: 5px;
+  font-family: 'Courier New', monospace;
+}
+
+.index-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Tooltip personalizado */
+.column-row[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #333;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 1000;
+  font-size: 0.8rem;
+  margin-left: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.column-row[title]:hover::before {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: #333;
+  z-index: 1000;
+  margin-left: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .tables-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .column-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  /* Ocultar tooltips en móvil */
+  .column-row[title]:hover::after,
+  .column-row[title]:hover::before {
+    display: none;
+  }
+}
