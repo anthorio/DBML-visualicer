@@ -5,11 +5,50 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+.visualizer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .table-visualizer h2 {
-  margin-top: 0;
+  margin: 0;
   color: #333;
   font-size: 1.5rem;
-  margin-bottom: 20px;
+}
+
+.toggle-all-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.toggle-all-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.4);
+}
+
+.toggle-all-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+}
+
+.btn-icon {
+  font-size: 1rem;
 }
 
 .tables-layout {
@@ -80,6 +119,16 @@
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
+  transition: background-color 0.2s;
+}
+
+.table-header.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.table-header.clickable:hover {
+  background: #e9ecef;
 }
 
 .table-title {
@@ -101,6 +150,12 @@
   font-weight: normal;
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .column-count {
   background: #007bff;
   color: white;
@@ -110,10 +165,38 @@
   font-weight: 500;
 }
 
+.collapse-icon {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.collapse-icon.collapsed {
+  transform: rotate(0deg);
+}
+
 .table-body {
   padding: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 2000px;
+  opacity: 1;
+}
+
+.table-body.collapsed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+}
+
+.table-card.collapsed {
+  overflow: hidden;
+}
+
+.table-card.collapsed .table-header {
+  border-bottom: none;
 }
 
 .columns-list {
@@ -276,6 +359,21 @@
 }
 
 @media (max-width: 768px) {
+  .visualizer-header {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  
+  .table-visualizer h2 {
+    font-size: 1.3rem;
+  }
+  
+  .toggle-all-btn {
+    justify-content: center;
+    width: 100%;
+  }
+  
   .tables-container {
     flex-direction: column;
     gap: 15px;

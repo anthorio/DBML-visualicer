@@ -5,6 +5,7 @@ const TableVisualizer = ({ tables }) => {
   const [hoveredColumn, setHoveredColumn] = useState(null);
   const containerRef = useRef(null);
   const [columns, setColumns] = useState([[], [], []]);
+  const [collapsedTables, setCollapsedTables] = useState(new Set());
 
   const getTypeColor = (type) => {
     const typeColors = {
@@ -39,6 +40,27 @@ const TableVisualizer = ({ tables }) => {
     setHoveredColumn(null);
   };
 
+  const toggleTableCollapse = (tableIndex) => {
+    const newCollapsed = new Set(collapsedTables);
+    if (newCollapsed.has(tableIndex)) {
+      newCollapsed.delete(tableIndex);
+    } else {
+      newCollapsed.add(tableIndex);
+    }
+    setCollapsedTables(newCollapsed);
+  };
+
+  const toggleAllTables = () => {
+    if (collapsedTables.size === tables.length) {
+      // Si todas están colapsadas, expandir todas
+      setCollapsedTables(new Set());
+    } else {
+      // Si no todas están colapsadas, colapsar todas
+      const allTableIndices = new Set(tables.map((_, index) => index));
+      setCollapsedTables(allTableIndices);
+    }
+  };
+
   // Distribución de tablas en columnas balanceadas (responsive)
   useEffect(() => {
     if (tables.length === 0) return;
@@ -57,8 +79,10 @@ const TableVisualizer = ({ tables }) => {
       const columnHeights = Array(numColumns).fill(0);
       
       tables.forEach((table, index) => {
-        // Estimar altura de la tabla (header + columnas + índices)
-        const estimatedHeight = 60 + (table.columns.length * 35) + (table.indexes?.length ? 50 + (table.indexes.length * 20) : 0);
+        // Estimar altura de la tabla (header siempre visible, body solo si no está colapsada)
+        const headerHeight = 60;
+        const bodyHeight = collapsedTables.has(index) ? 0 : (table.columns.length * 35) + (table.indexes?.length ? 50 + (table.indexes.length * 20) : 0);
+        const estimatedHeight = headerHeight + bodyHeight;
         
         // Encontrar la columna con menor altura
         const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
@@ -75,66 +99,96 @@ const TableVisualizer = ({ tables }) => {
     window.addEventListener('resize', updateLayout);
     
     return () => window.removeEventListener('resize', updateLayout);
-  }, [tables]);
+  }, [tables, collapsedTables]);
 
   return (
     <div className="table-visualizer">
-      <h2>Visualización de Tablas ({tables.length} tablas encontradas)</h2>
+      <div className="visualizer-header">
+        <h2>Visualización de Tablas ({tables.length} tablas encontradas)</h2>
+        <button 
+          className="toggle-all-btn"
+          onClick={toggleAllTables}
+          title={collapsedTables.size === tables.length ? "Expandir todas las tablas" : "Colapsar todas las tablas"}
+        >
+          {collapsedTables.size === tables.length ? (
+            <>
+              <span className="btn-icon">📋</span>
+              Expandir todas
+            </>
+          ) : (
+            <>
+              <span className="btn-icon">📄</span>
+              Colapsar todas
+            </>
+          )}
+        </button>
+      </div>
       
       <div className="tables-layout">
         <div className="tables-container" ref={containerRef}>
           {columns.map((columnTables, columnIndex) => (
             <div key={columnIndex} className="table-column">
-              {columnTables.map((table, tableIndex) => (
-                <div key={table.originalIndex} className="table-card">
-                  <div className="table-header">
-                    <div className="table-title">
-                      <h3 className="table-name">{table.name}</h3>
-                      {table.fileName && (
-                        <span className="file-name">📁 {table.fileName}.dbml</span>
-                      )}
-                    </div>
-                    <span className="column-count">{table.columns.length}</span>
-                  </div>
-                  
-                  <div className="table-body">
-                    <div className="columns-list">
-                      {table.columns.map((column, columnIndex) => (
-                        <div 
-                          key={columnIndex} 
-                          className={`column-row ${column.isPrimaryKey ? 'primary-key' : ''}`}
-                          onMouseEnter={() => handleColumnHover(table.originalIndex, columnIndex, column)}
-                          onMouseLeave={handleColumnLeave}
-                        >
-                          <div className="column-info">
-                            <span className="column-name">
-                              {column.isPrimaryKey && <span className="key-icon">🔑</span>}
-                              {column.name}
-                            </span>
-                            <span 
-                              className="column-type"
-                              style={{ backgroundColor: getTypeColor(column.type) }}
-                            >
-                              {column.type}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
+              {columnTables.map((table, tableIndex) => {
+                const isCollapsed = collapsedTables.has(table.originalIndex);
+                return (
+                  <div key={table.originalIndex} className={`table-card ${isCollapsed ? 'collapsed' : ''}`}>
+                    <div 
+                      className="table-header clickable"
+                      onClick={() => toggleTableCollapse(table.originalIndex)}
+                    >
+                      <div className="table-title">
+                        <h3 className="table-name">{table.name}</h3>
+                        {table.fileName && (
+                          <span className="file-name">📁 {table.fileName}.dbml</span>
+                        )}
+                      </div>
+                      <div className="header-controls">
+                        <span className="column-count">{table.columns.length}</span>
+                        <span className={`collapse-icon ${isCollapsed ? 'collapsed' : ''}`}>
+                          {isCollapsed ? '▶️' : '🔽'}
+                        </span>
+                      </div>
                     </div>
                     
-                    {table.indexes && table.indexes.length > 0 && (
-                      <div className="indexes-section">
-                        <h4>Índices:</h4>
-                        {table.indexes.map((index, indexIndex) => (
-                          <div key={indexIndex} className="index-item">
-                            <strong>{index.name}:</strong> ({index.columns.join(', ')})
+                    <div className={`table-body ${isCollapsed ? 'collapsed' : ''}`}>
+                      <div className="columns-list">
+                        {table.columns.map((column, columnIndex) => (
+                          <div 
+                            key={columnIndex} 
+                            className={`column-row ${column.isPrimaryKey ? 'primary-key' : ''}`}
+                            onMouseEnter={() => handleColumnHover(table.originalIndex, columnIndex, column)}
+                            onMouseLeave={handleColumnLeave}
+                          >
+                            <div className="column-info">
+                              <span className="column-name">
+                                {column.isPrimaryKey && <span className="key-icon">🔑</span>}
+                                {column.name}
+                              </span>
+                              <span 
+                                className="column-type"
+                                style={{ backgroundColor: getTypeColor(column.type) }}
+                              >
+                                {column.type}
+                              </span>
+                            </div>
                           </div>
                         ))}
                       </div>
-                    )}
+                      
+                      {table.indexes && table.indexes.length > 0 && (
+                        <div className="indexes-section">
+                          <h4>Índices:</h4>
+                          {table.indexes.map((index, indexIndex) => (
+                            <div key={indexIndex} className="index-item">
+                              <strong>{index.name}:</strong> ({index.columns.join(', ')})
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ))}
         </div>

@@ -1,5 +1,16 @@
 # DBML Visualizer
 
+- 🎨 **Visualización Avanzada**: Layout de 3 columnas tipo masonry que se adapta automáticamente
+- 📁 **Carga Automática**: Carga automáticamente todos los archivos .dbml de la carpeta `tablas/`
+- 🔑 **Primary Keys**: Identifica y muestra las primary keys con emoji de llave 🔑
+- 🖱️ **Panel de Notas Lateral**: Muestra las descripciones al pasar el ratón sobre las columnas
+- 📊 **Índices Visualizados**: Muestra los índices de cada tabla al final
+- 🎨 **Tipos de Datos Codificados por Color**: Diferentes colores para diferentes tipos de datos
+- 🔄 **Colapsar/Expandir**: Haz clic en el header para colapsar tablas individuales
+- 🎛️ **Control Global**: Botón para colapsar/expandir todas las tablas a la vez
+- 📐 **Distribución Inteligente**: Las tablas se distribuyen balanceadamente en 3 columnas
+- 📱 **Diseño Responsivo**: Funciona en dispositivos móviles y desktopizer
+
 Un visualizador sencillo de esquemas de base de datos en formato DBML (Database Markup Language) construido con React y Vite.
 
 ## Características
@@ -45,11 +56,36 @@ El proyecto incluye `ejemplo-tienda.dbml` que contiene tres tablas relacionadas:
 - **ejemplo_clientes**: Información de clientes registrados  
 - **ejemplo_pedidos**: Pedidos realizados por los clientes
 
+### Funcionalidades Avanzadas
+
+#### 📐 **Layout Masonry Inteligente**
+- **Distribución automática** en 3 columnas balanceadas por altura
+- **Algoritmo optimizado** que coloca cada tabla en la columna más corta
+- **Responsive design** que se adapta a 2 columnas (tablet) y 1 columna (móvil)
+
+#### 🎛️ **Controles Interactivos**
+- **Headers clickeables** con indicadores visuales (🔽/▶️)
+- **Hover effects** con cambios de color y transiciones suaves
+- **Panel lateral fijo** que muestra información contextual
+- **Botón de control global** con iconos dinámicos (📄/📋)
+
 ### Interactuar con las Tablas
-- **Pasa el ratón** sobre cualquier columna para ver su descripción completa
+
+#### 🖱️ **Visualización de Notas**
+- **Pasa el ratón** sobre cualquier columna para ver su descripción en el panel lateral
+- **Panel de notas** se actualiza dinámicamente con información contextual
+- **Animaciones suaves** para una mejor experiencia de usuario
+
+#### 🔄 **Control de Visibilidad**
+- **Clic en el header** de cualquier tabla para colapsarla/expandirla
+- **Botón "Colapsar/Expandir todas"** en la parte superior para control global
+- **Rebalanceo automático** de las columnas al colapsar/expandir tablas
+
+#### 🎨 **Elementos Visuales**
 - **Primary keys** se muestran con emoji de llave 🔑 y fondo destacado
-- **Índices** se listan al final de cada tabla
+- **Índices** se listan al final de cada tabla con formato compacto
 - **Tipos de datos** están codificados por colores para fácil identificación
+- **Layout de 3 columnas** que distribuye las tablas balanceadamente
 
 ## Formato DBML Soportado
 
