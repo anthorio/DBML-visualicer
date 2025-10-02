@@ -1,7 +1,7 @@
 // Función para importar automáticamente todos los archivos .dbml de la carpeta tablas
 const importAllDbmlFiles = () => {
   // Usar Vite's import.meta.glob para importar archivos dinámicamente
-  const modules = import.meta.glob('../tablas/*.dbml', { 
+  const modules = import.meta.glob('../../tablas/*.dbml', { 
     eager: true, 
     query: '?raw',
     import: 'default'

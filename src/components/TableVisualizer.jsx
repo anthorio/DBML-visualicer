@@ -83,7 +83,7 @@ const TableVisualizer = ({ tables }) => {
       
       {tables.length === 0 && (
         <div className="no-tables">
-          <p>No se encontraron tablas en la carpeta "tablas". Añade archivos .dbml a la carpeta src/tablas/ para visualizarlos.</p>
+          <p>No se encontraron tablas en la carpeta "tablas". Añade archivos .dbml a la carpeta tablas/ (en la raíz del proyecto) para visualizarlos.</p>
         </div>
       )}
     </div>

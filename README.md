@@ -35,7 +35,7 @@ npm run dev
 ## Uso
 
 ### Añadir Tablas DBML
-1. Coloca tus archivos `.dbml` en la carpeta `src/tablas/`
+1. Coloca tus archivos `.dbml` en la carpeta `tablas/` (en la raíz del proyecto)
 2. Reinicia el servidor de desarrollo con `npm run dev`
 3. Las tablas se cargarán automáticamente al iniciar la aplicación
 
@@ -92,12 +92,14 @@ src/
 │   └── TableVisualizer.css # Estilos del visualizador
 ├── services/
 │   └── dbmlLoader.js       # Servicio para cargar archivos DBML
-├── tablas/                 # Carpeta con archivos .dbml
-│   └── DTDOBA.dbml        # Ejemplo de tabla
 ├── App.jsx                 # Componente principal
 ├── App.css                 # Estilos principales
 ├── main.jsx               # Punto de entrada
 └── index.css              # Estilos globales
+tablas/                     # Carpeta con archivos .dbml (raíz del proyecto)
+├── DTDOBA.dbml            # Ejemplo de tabla bancaria
+├── DTCLMA.dbml            # Ejemplo de tabla de prestaciones
+└── DTCLIE.dbml            # Ejemplo de tabla de clientes
 ```
 
 ## Contribuir
