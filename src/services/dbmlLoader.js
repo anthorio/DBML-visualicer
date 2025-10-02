@@ -90,7 +90,8 @@ export const parseDBML = (text) => {
     // Parsear columnas dentro de la tabla
     if (inTable && currentTable) {
       // Formato: COLUMN_NAME type [NOTE: 'description', NOT NULL] o [note: "description"]
-      const columnMatch = line.match(/^(\w+)\s+(\w+(?:\(\d+\))?)\s*(?:\[(?:note|NOTE):\s*['"]([^'"]+)['"](?:,\s*(?:NOT NULL|not null))?\])?/i);
+      // Mejorado para soportar decimal(16,6), varchar(8), etc.
+      const columnMatch = line.match(/^(\w+)\s+(\w+(?:\(\d+(?:,\d+)?\))?)\s*(?:\[(?:note|NOTE):\s*['"]([^'"]+)['"](?:,\s*(?:null|NULL|NOT NULL|not null))?\])?/i);
       if (columnMatch) {
         const [, name, type, note] = columnMatch;
         currentTable.columns.push({
