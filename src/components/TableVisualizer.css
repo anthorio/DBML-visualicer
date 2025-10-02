@@ -400,3 +400,136 @@
     max-height: 150px;
   }
 }
+
+/* Estilos para las nuevas secciones de tablas TXT */
+
+.unique-badge {
+  background-color: #28a745;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+  font-weight: 500;
+}
+
+.observations-section,
+.relationships-section {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+  border-left: 3px solid #6c757d;
+}
+
+.observations-section h4,
+.relationships-section h4 {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: #495057;
+  font-weight: 600;
+}
+
+.observations-content {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #6c757d;
+}
+
+.observation-line {
+  margin-bottom: 4px;
+}
+
+.relationships-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.relationship-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  padding: 6px 8px;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.relationship-field {
+  font-weight: 600;
+  color: #495057;
+  min-width: 80px;
+}
+
+.relationship-arrow {
+  margin: 0 8px;
+  color: #6c757d;
+  font-weight: bold;
+}
+
+.relationship-target {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+
+.target-table {
+  font-weight: 600;
+  color: #007bff;
+}
+
+.target-field {
+  color: #6c757d;
+  font-family: 'Courier New', monospace;
+}
+
+.relationship-desc {
+  color: #6c757d;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+/* Mejoras para tooltips en tablas TXT */
+.table-name[title] {
+  cursor: help;
+  position: relative;
+}
+
+.table-name[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #333;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  max-width: 300px;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Responsive para nuevas secciones */
+@media (max-width: 768px) {
+  .relationship-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .relationship-arrow {
+    margin: 0;
+    align-self: flex-start;
+  }
+  
+  .relationship-target {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

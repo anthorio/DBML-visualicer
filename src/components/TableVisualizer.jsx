@@ -137,9 +137,16 @@ const TableVisualizer = ({ tables }) => {
                       onClick={() => toggleTableCollapse(table.originalIndex)}
                     >
                       <div className="table-title">
-                        <h3 className="table-name">{table.name}</h3>
+                        <h3 
+                          className="table-name"
+                          title={table.description || table.name}
+                        >
+                          {table.name}
+                        </h3>
                         {table.fileName && (
-                          <span className="file-name">📁 {table.fileName}.dbml</span>
+                          <span className="file-name">
+                            📁 {table.fileName}.{table.source === 'txt' ? 'txt' : table.source === 'doc' ? 'doc' : 'dbml'}
+                          </span>
                         )}
                       </div>
                       <div className="header-controls">
@@ -161,7 +168,11 @@ const TableVisualizer = ({ tables }) => {
                           >
                             <div className="column-info">
                               <span className="column-name">
-                                {column.isPrimaryKey && <span className="key-icon">🔑</span>}
+                                {column.isPrimaryKey && (
+                                  <span className="key-icon">
+                                    🔑{column.pkNumber && column.pkNumber}
+                                  </span>
+                                )}
                                 {column.name}
                               </span>
                               <span 
@@ -181,8 +192,49 @@ const TableVisualizer = ({ tables }) => {
                           {table.indexes.map((index, indexIndex) => (
                             <div key={indexIndex} className="index-item">
                               <strong>{index.name}:</strong> ({index.columns.join(', ')})
+                              {index.unique && <span className="unique-badge">UNIQUE</span>}
                             </div>
                           ))}
+                        </div>
+                      )}
+
+                      {table.observations && table.observations.trim() && (
+                        <div className="observations-section">
+                          <h4>Observaciones:</h4>
+                          <div className="observations-content">
+                            {table.observations.split('\n').map((line, lineIndex) => (
+                              line.trim() && (
+                                <div key={lineIndex} className="observation-line">
+                                  {line.trim()}
+                                </div>
+                              )
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {table.relationships && table.relationships.length > 0 && (
+                        <div className="relationships-section">
+                          <h4>Relación de Códigos:</h4>
+                          <div className="relationships-table">
+                            {table.relationships.map((rel, relIndex) => (
+                              <div key={relIndex} className="relationship-row">
+                                <div className="relationship-field">
+                                  <strong>{rel.field}</strong>
+                                </div>
+                                <div className="relationship-arrow">→</div>
+                                <div className="relationship-target">
+                                  <span className="target-table">{rel.relatedTable}</span>
+                                  {rel.relatedField && (
+                                    <span className="target-field">.{rel.relatedField}</span>
+                                  )}
+                                  {rel.description && rel.description !== 'Sin funcionalidad' && (
+                                    <span className="relationship-desc">({rel.description})</span>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       )}
                     </div>
@@ -197,7 +249,10 @@ const TableVisualizer = ({ tables }) => {
           {hoveredColumn ? (
             <div className="note-content">
               <h4>📝 {hoveredColumn.columnName}</h4>
-              <p>{hoveredColumn.note}</p>
+              <div 
+                className="note-text"
+                dangerouslySetInnerHTML={{ __html: hoveredColumn.note }}
+              />
             </div>
           ) : (
             <div className="note-placeholder">

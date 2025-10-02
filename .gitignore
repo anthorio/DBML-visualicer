@@ -175,3 +175,9 @@ $RECYCLE.BIN/
 
 # Excepción: permitir archivos de ejemplo específicos
 !tablas/ejemplo-tienda.dbml
+
+# TXT files (ignore all except example)
+table_docs/*.txt
+
+# Excepción: permitir archivo de ejemplo TXT
+!table_docs/EJEMPLO.txt
