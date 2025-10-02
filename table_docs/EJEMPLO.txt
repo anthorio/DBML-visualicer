@@ -1,0 +1,34 @@
+Nombre :	EJEMPLO
+Descripción :	Tabla de ejemplo para mostrar el formato esperado de archivos TXT
+	
+Clave	Nº	Descripción de Campo	Nombre	Tipo	Ancho	Prec.	NULO
+PK1	1	Código único del registro	EJEMCDID	N	10		N
+PK2	2	Código de la categoría	EJEMCDCA	N	5		N
+	3	Nombre descriptivo	EJEMNOMB	VC	50		S
+	4	Fecha de creación	EJEMFECR	C	8		N
+	5	Estado activo (1)	EJEMESTA	C	1		N
+	6	Observaciones adicionales	EJEMOBSE	VC	200		S
+	7	Precio unitario	EJEMPREC	N	10	2	S
+	8	Indicador especial (2)	EJEMINDE	C	2		S
+
+Índices:
+
+Tipo	Nombre	Campos
+UNIQUE	PK_EJEMPLO_ID_CAT	EJEMCDID + EJEMCDCA
+	IDX_EJEMPLO_NOMBRE	EJEMNOMB
+	IDX_EJEMPLO_FECHA	EJEMFECR
+
+Observaciones
+
+(1)	A - Activo
+	I - Inactivo
+	P - Pendiente
+
+(2)	01 - Especial tipo 1
+	02 - Especial tipo 2
+	03 - Sin especificar
+
+Relación de Códigos con otras tablas
+Campo	Tabla	Campo	Descripción
+EJEMCDCA	CATEGORIAS	CATECDID	Relación con categorías
+EJEMESTA	ESTADOS	ESTCDEST	Estados permitidos
